@@ -7,17 +7,19 @@
   </head>
   <body>
     <h1>Poll your friends</h1>
-    <h3>Title: <input type="text" name="name" placeholder="name your poll..."></h3>
+    <h3>Title: <input id="title" type="text" name="name" placeholder="name your poll..."></h3>
     <h3>Options:</h3>
     <ol>
-      <li><input type="text" name="name" placeholder="fill the answer..."></li>
-      <li><input type="text" name="name" placeholder="fill the answer..."></li>
-      <li><input type="text" name="name" placeholder="fill the answer..."></li>
+      <li id="one"><input type="text" name="name" placeholder="fill the answer..."></li>
+      <li id="two"><input type="text" name="name" placeholder="fill the answer..."></li>
+      <li id="three"><input type="text" name="name" placeholder="fill the answer..."></li>
     </ol>
-    <input type="button" name="name" value="Start the Poll">
+    <input id="poll" type="button" name="name" value="Start the Poll">
     <div class="links">
       <p>Admin View:</p>
       <p>Voting Page:</p>
     </div>
+    <script src="jquery-2.2.3.js"> </script>
+    <script src="client.js"> </script>
   </body>
 </html>
