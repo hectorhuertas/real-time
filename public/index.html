@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -7,19 +6,20 @@
   </head>
   <body>
     <h1>Poll your friends</h1>
-    <h3>Title: <input id="title" type="text" name="name" placeholder="name your poll..."></h3>
+    <h3>Title: <input id="title" type="text" name="name" value ="titulo" placeholder="name your poll..."></h3>
     <h3>Options:</h3>
     <ol>
-      <li><input id="one" type="text" name="name" placeholder="fill the answer..."></li>
-      <li><input id="two" type="text" name="name" placeholder="fill the answer..."></li>
-      <li><input id="three" type="text" name="name" placeholder="fill the answer..."></li>
+      <li><input id="one" type="text" name="name" value="opt 1" placeholder="fill the answer..."></li>
+      <li><input id="two" type="text" name="name" value="opt 2" placeholder="fill the answer..."></li>
+      <li><input id="three" type="text" name="name" value="opt 3" placeholder="fill the answer..."></li>
     </ol>
     <input id="poll" type="button" name="name" value="Start the Poll">
-    <div class="links">
+    <div id="links">
       <p>Admin View:</p>
       <p>Voting Page:</p>
     </div>
     <script src="jquery-2.2.3.js"> </script>
+    <script src="socket.io/socket.io.js"> </script>
     <script src="client.js"> </script>
   </body>
 </html>
