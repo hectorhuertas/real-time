@@ -20,6 +20,16 @@ const server = http.createServer(app) .listen(port, function() {
 const socketIo = require('socket.io');
 const io = socketIo(server);
 
-io.on('connection', function(){
+io.on('connection', function(socket){
   console.log('someone connected');
+
+  socket.on('message', function (channel, msg) {
+    // if (channel === 'newPoll') { generatePoll(msg); }
+    if (channel === 'newPoll') {
+      var newLinks = {admin: 'admin', voting: 'voting'};
+      socket.emit('newLinks', newLinks);
+    }
+    // console.log(channel);
+    // console.log(msg);
+  });
 });
