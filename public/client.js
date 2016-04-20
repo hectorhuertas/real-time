@@ -24,7 +24,9 @@ function generatePoll(){
   });
 
   socket.on('newLinks', function(links){
-    console.log('Conexion stablished');
-    $('#links').empty().append('<p>Admin View: ' + links.admin + '</p>' +
-    '<p>Voting Page: ' + links.voting + '</p>' );
+    console.log(links.voting);
+    $('#links').empty().append(
+      '<p>Admin View: <a href="' + links.admin +'">' + links.admin + '</a></p>' +
+      '<p>Voting Page: <a href="' + links.voting +'">' + links.voting + '</a></p>'
+    );
   });
