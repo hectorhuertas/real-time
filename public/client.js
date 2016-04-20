@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $('#poll').on('click', generatePoll);
-  console.log('ready');
+  startSockets();
 });
 
 function generatePoll(){
@@ -16,4 +16,12 @@ function generatePoll(){
     three: three
   };
   console.log(poll);
+}
+
+function startSockets(){
+  var socket = io();
+
+  socket.on('connect', function(){
+    console.log('Conexion stablished');
+  });
 }
