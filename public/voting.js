@@ -11,19 +11,18 @@ socket.on('connect', function(){
 
 socket.on('yourVote', function(vote){
   $('#yourVote').text('Your vote: ' + vote);
-  console.log('voto recibido');
 });
 
 socket.on('pollClosed', function(poll){
-  if (poll === currentPoll) {
-    $('#poll-options').empty().append('<h3>Poll Closed</h3>');
-  }
+  setPollAsClosed(poll);
 });
 
 function vote(e){
-  const id = currentPoll;
-  const value = e.target.id;
-  const vote = {pollId:id, value: value};
-  socket.send('newVote', vote);
-  console.log('Votando ' + e.target.id);
+  socket.send('newVote', {pollId:currentPoll, value: e.target.id});
+}
+
+function setPollAsClosed(poll) {
+  if (poll === currentPoll) {
+    $('#poll-options').empty().append('<h3>Poll Closed</h3>');
+  }
 }
