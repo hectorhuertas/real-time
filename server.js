@@ -65,6 +65,7 @@ io.on('connection', function(socket){
       io.sockets.emit('pollResults', polls[msg.pollId]);
     } else if (channel === 'closePoll'){
       polls[msg].status = 'closed';
+      io.sockets.emit('pollClosed', msg);
     }
     console.log(msg);
     // console.log(polls);
