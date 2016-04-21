@@ -19,9 +19,6 @@ socket.on('pollClosed', function(poll){
   if (poll === currentPoll) {
     $('#status').empty().append('<h3>Poll Closed</h3>');
   }
-  for(var option in poll.options){
-    $("p:contains('" + option + "')").find('span').text(poll.options[option]);
-  }
 });
 
 function closePoll(e) {
