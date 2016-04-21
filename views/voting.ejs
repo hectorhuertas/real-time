@@ -7,13 +7,13 @@
   <body>
     <h1>Cast your vote!</h1>
 
-    <h2><%= poll.title %></h2>
+    <h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
 
     <% for(option in poll.options){ %>
-      <%= option %>:<input type="button" name="name" value="Vote"><br>
+      <%= option %>:<input id="<%= option %>"class="voter" type="button" name="name" value="Vote"><br>
     <% } %>
 
-    <h3>Your vote: </h3>
+    <h3 id="yourVote">Your vote: </h3>
 
     <script src="/jquery-2.2.3.js"> </script>
     <script src="/socket.io/socket.io.js"> </script>

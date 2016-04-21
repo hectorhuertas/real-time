@@ -6,6 +6,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 const polls = {};
 polls['test-poll'] = {
+  id: 'test-poll',
   title: 'Test Poll',
   secret: 'secret',
   options: {
@@ -58,14 +59,19 @@ io.on('connection', function(socket){
         voting: host + 'polls/' + slugify(msg.title)
       };
       socket.emit('newLinks', newLinks);
+    } else if (channel === 'newVote') {
+      polls[msg.pollId].options[msg.value]++;
+      socket.emit('yourVote', msg.value);
+      console.log(msg);
     }
-    console.log(msg);
+    // console.log(msg);
     console.log(polls);
   });
 });
 
 function addPoll(poll, secret){
   polls[slugify(poll.title)] = {
+    id: slugify(poll.title),
     title: poll.title,
     secret: secret,
     options: {
