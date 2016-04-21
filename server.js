@@ -62,6 +62,7 @@ io.on('connection', function(socket){
     } else if (channel === 'newVote') {
       polls[msg.pollId].options[msg.value]++;
       socket.emit('yourVote', msg.value);
+      io.sockets.emit('pollResults', polls[msg.pollId]);
       console.log(msg);
     }
     // console.log(msg);
