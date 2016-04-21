@@ -5,12 +5,14 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'hbs');
 const polls = {};
-polls.prueba = {
-  title: 'prueba',
-  secret: 'sagds3w3wt',
-  ['opt 1']: 0,
-  ['opt 2']: 0,
-  ['opt 3']: 0
+polls['Test Poll'] = {
+  title: 'Test Poll',
+  secret: 'secret',
+  options: {
+    ['Yeah!']: 0,
+    ['So so']: 0,
+    ['No way']: 0
+  }
 };
 // ROUTES
 
@@ -19,14 +21,14 @@ app.get('/', function(req, res){
 });
 
 app.get('/polls/:id', function(req, res){
-  res.render('voting', {morton: polls[req.params.id]});
+  res.render('voting', {poll: polls[req.params.id]});
   console.log(polls);
 });
 
 app.get('/polls/:id/admin/:secret', function(req, res){
   const owner = req.params.secret === polls[req.params.id].secret;
   if (owner) {
-    res.render('admin', {morton: polls[req.params.id]});
+    res.render('admin', {poll: polls[req.params.id]});
   } else {
     res.sendStatus(404);
   }
