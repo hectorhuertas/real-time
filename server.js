@@ -9,10 +9,8 @@ const polls = {};
 
 require('./routes.js')(app, polls);
 
-const host = config.host;
-const port = process.env.PORT || 3000;
-const server = http.createServer(app) .listen(port, function() {
-  console.log('Listening on port ' + port);
+const server = http.createServer(app).listen(config.port, function() {
+  console.log('Listening on port ' + config.port);
 });
 
 const socketIo = require('socket.io');
@@ -27,8 +25,8 @@ io.on('connection', function(socket){
       const secret = generateSecret();
       addPoll(msg, secret);
       const newLinks = {
-        admin: host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
-        voting: host + 'polls/' + slugify(msg.title)
+        admin: config.host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
+        voting: config.host + 'polls/' + slugify(msg.title)
       };
       socket.emit('newLinks', newLinks);
     } else if (channel === 'newVote') {
