@@ -60,9 +60,11 @@ io.on('connection', function(socket){
       };
       socket.emit('newLinks', newLinks);
     } else if (channel === 'newVote') {
-      polls[msg.pollId].options[msg.value]++;
-      socket.emit('yourVote', msg.value);
-      io.sockets.emit('pollResults', polls[msg.pollId]);
+      if (polls[msg.pollId].status !== 'closed') {
+        polls[msg.pollId].options[msg.value]++;
+        socket.emit('yourVote', msg.value);
+        io.sockets.emit('pollResults', polls[msg.pollId]);
+      }
     } else if (channel === 'closePoll'){
       polls[msg].status = 'closed';
       io.sockets.emit('pollClosed', msg);
