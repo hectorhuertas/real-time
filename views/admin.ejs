@@ -2,18 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Voting Page</title>
+    <title>Admin View</title>
   </head>
   <body>
-    <h1>Cast your vote!</h1>
+    <h1>Poll Results</h1>
 
     <h2><%= poll.title %></h2>
 
     <% for(option in poll.options){ %>
-      <%= option %>:<input type="button" name="name" value="Vote"><br>
+      <%= option %>: <%= poll.options[option] %><br>
     <% } %>
-
-    <h3>Your vote: </h3>
 
     <script src="/jquery-2.2.3.js"> </script>
     <script src="/socket.io/socket.io.js"> </script>
