@@ -13,7 +13,11 @@
       <p><%= option %>: <span><%= poll.options[option] %></span></p>
     <% } %>
     <div id="status">
-      <button id="close-poll" type="button" name="button">Close Poll</button>
+      <% if(poll.status === 'closed'){ %>
+        <h3>Poll Closed</h3>
+      <% } else { %>
+        <button id="close-poll" type="button" name="button">Close Poll</button>
+      <% } %>
     </div>
 
     <script src="/jquery-2.2.3.js"> </script>
