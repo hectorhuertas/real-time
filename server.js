@@ -5,7 +5,7 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'hbs');
 const polls = {};
-polls['Test Poll'] = {
+polls['test-poll'] = {
   title: 'Test Poll',
   secret: 'secret',
   options: {
@@ -54,8 +54,8 @@ io.on('connection', function(socket){
       const secret = generateSecret();
       addPoll(msg, secret);
       const newLinks = {
-        admin: host + msg.title + '-' + secret + '.html',
-        voting: host + 'admin.html'
+        admin: host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
+        voting: host + 'polls/' + slugify(msg.title)
       };
       socket.emit('newLinks', newLinks);
     }
@@ -65,11 +65,19 @@ io.on('connection', function(socket){
 });
 
 function addPoll(poll, secret){
-  polls[poll.title] = {
+  polls[slugify(poll.title)] = {
     title: poll.title,
     secret: secret,
-    [poll.one]: 0,
-    [poll.two]: 0,
-    [poll.three]: 0
+    options: {
+      [poll.one]: 0,
+      [poll.two]: 0,
+      [poll.three]: 0
+    }
   };
+}
+
+function slugify(text){
+  return text.toString().toLowerCase().trim()
+    .replace(/&/g, '-and-')
+    .replace(/[\s\W-]+/g, '-');
 }
