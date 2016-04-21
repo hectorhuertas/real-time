@@ -7,11 +7,18 @@
   <body>
     <h1>Poll Results</h1>
 
-    <h2><%= poll.title %></h2>
+    <h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
 
     <% for(option in poll.options){ %>
       <p><%= option %>: <span><%= poll.options[option] %></span></p>
     <% } %>
+    <div id="status">
+      <% if(poll.status === 'closed'){ %>
+        <h3>Poll Closed</h3>
+      <% } else { %>
+        <button id="close-poll" type="button" name="button">Close Poll</button>
+      <% } %>
+    </div>
 
     <script src="/jquery-2.2.3.js"> </script>
     <script src="/socket.io/socket.io.js"> </script>
