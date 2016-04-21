@@ -63,10 +63,11 @@ io.on('connection', function(socket){
       polls[msg.pollId].options[msg.value]++;
       socket.emit('yourVote', msg.value);
       io.sockets.emit('pollResults', polls[msg.pollId]);
-      console.log(msg);
+    } else if (channel === 'closePoll'){
+      polls[msg].status = 'closed';
     }
-    // console.log(msg);
-    console.log(polls);
+    console.log(msg);
+    // console.log(polls);
   });
 });
 

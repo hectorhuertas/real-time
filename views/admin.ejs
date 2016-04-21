@@ -7,7 +7,7 @@
   <body>
     <h1>Poll Results</h1>
 
-    <h2><%= poll.title %></h2>
+    <h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
 
     <% for(option in poll.options){ %>
       <p><%= option %>: <span><%= poll.options[option] %></span></p>
