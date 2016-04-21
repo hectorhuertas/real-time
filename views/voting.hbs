@@ -1,8 +1,6 @@
 <h1>Cast your vote!</h1>
 <h2>{{poll.title}}</h2>
 
-<h5>Options:</h5>
-
 {{#each poll.options}}
   {{@key}}: <input type="button" name="name" value="Vote"><br>
 {{/each}}
