@@ -1,9 +1,11 @@
 const express = require('express');
 const http = require('http');
 const app = express();
+const config = require('./config.js');
 
-app.use(express.static('public'));
-app.set('view engine', 'ejs');
+config.set(app);
+// app.use(express.static('public'));
+// app.set('view engine', 'ejs');
 const polls = {};
 polls['test-poll'] = {
   id: 'test-poll',
@@ -38,7 +40,6 @@ require('./routes.js')(app, polls);
 
 // ROUTES END
 // const host = process.env.NODE_ENV === 'production' ? 'https://real-time-hector.herokuapp.com/' : 'http://localhost:3000/';
-const config = require('./config.js');
 const host = config.host;
 const port = process.env.PORT || 3000;
 const server = http.createServer(app) .listen(port, function() {
