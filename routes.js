@@ -1,3 +1,7 @@
+function pollOwner(request, polls){
+  return request.params.secret === polls[request.params.id].secret;
+}
+
 module.exports = function(app, polls){
   app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/index.html' );
@@ -5,16 +9,13 @@ module.exports = function(app, polls){
 
   app.get('/polls/:id', function(req, res){
     res.render('voting', {poll: polls[req.params.id]});
-    console.log(polls);
   });
 
   app.get('/polls/:id/admin/:secret', function(req, res){
-    const owner = req.params.secret === polls[req.params.id].secret;
-    if (owner) {
+    if (pollOwner(req, polls)) {
       res.render('admin', {poll: polls[req.params.id]});
     } else {
       res.sendStatus(404);
     }
-    console.log(polls);
   });
 };
