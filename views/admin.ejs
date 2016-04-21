@@ -12,6 +12,9 @@
     <% for(option in poll.options){ %>
       <p><%= option %>: <span><%= poll.options[option] %></span></p>
     <% } %>
+    <div class="status">
+      <button id="close-poll" type="button" name="button">Close Poll</button>
+    </div>
 
     <script src="/jquery-2.2.3.js"> </script>
     <script src="/socket.io/socket.io.js"> </script>
