@@ -5,26 +5,9 @@ module.exports = function(io, config, polls){
     console.log('someone connected');
 
     socket.on('message', function (channel, msg) {
-      if (channel === 'newPoll') {
-        const secret = generateSecret();
-        addPoll(msg, secret);
-        const newLinks = {
-          admin: config.host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
-          voting: config.host + 'polls/' + slugify(msg.title)
-        };
-        socket.emit('newLinks', newLinks);
-      } else if (channel === 'newVote') {
-        if (polls[msg.pollId].status !== 'closed') {
-          polls[msg.pollId].options[msg.value]++;
-          socket.emit('yourVote', msg.value);
-          io.sockets.emit('pollResults', polls[msg.pollId]);
-        }
-      } else if (channel === 'closePoll'){
-        polls[msg].status = 'closed';
-        io.sockets.emit('pollClosed', msg);
-      }
-      console.log(msg);
-      // console.log(polls);
+      if (channel === 'newPoll')   { newPoll(socket, msg); }
+      if (channel === 'newVote')   { newVote(socket, msg); }
+      if (channel === 'closePoll') { closePoll(io,msg); }
     });
   });
 
@@ -47,4 +30,26 @@ module.exports = function(io, config, polls){
       .replace(/[\s\W-]+/g, '-');
   }
 
+  function newPoll(socket, msg){
+    const secret = generateSecret();
+    addPoll(msg, secret);
+    const newLinks = {
+      admin: config.host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
+      voting: config.host + 'polls/' + slugify(msg.title)
+    };
+    socket.emit('newLinks', newLinks);
+  }
+
+  function newVote(socket, msg){
+    if (polls[msg.pollId].status !== 'closed') {
+      polls[msg.pollId].options[msg.value]++;
+      socket.emit('yourVote', msg.value);
+      io.sockets.emit('pollResults', polls[msg.pollId]);
+    }
+  }
+
+  function closePoll(io,msg){
+    polls[msg].status = 'closed';
+    io.sockets.emit('pollClosed', msg);
+  }
 };
