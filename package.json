@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/hectorhuertas/real-time#readme",
   "dependencies": {
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "handlebars": "^4.0.5",
     "hbs": "^4.0.0",

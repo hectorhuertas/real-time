@@ -3,7 +3,7 @@ const http = require('http');
 const app = express();
 
 app.use(express.static('public'));
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 const polls = {};
 polls['test-poll'] = {
   title: 'Test Poll',
