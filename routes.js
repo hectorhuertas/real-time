@@ -13,7 +13,7 @@ module.exports = function(app, polls){
 
   app.get('/polls/:id/admin/:secret', function(req, res){
     if (pollOwner(req, polls)) {
-      res.render('admin', {poll: polls[req.params.id]});
+      res.render('admin', {viewName: 'admin', poll: polls[req.params.id], title: 'Admin View'});
     } else {
       res.sendStatus(404);
     }
