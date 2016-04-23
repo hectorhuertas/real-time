@@ -10,23 +10,10 @@ function sockets(io, config){
       pollManager.closeOutdated(io);
 
       if (channel === 'newPoll')   { pollManager.create(msg, socket); }
-      if (channel === 'newVote')   { newVote(socket, msg); }
-      if (channel === 'closePoll') { closePoll(io,msg); }
+      if (channel === 'newVote')   { pollManager.newVote(msg, io, socket); }
+      if (channel === 'closePoll') { pollManager.closePoll(msg, io); }
     });
   });
-
-  function newVote(socket, msg){
-    if (polls[msg.pollId].status !== 'closed') {
-      polls[msg.pollId].options[msg.value]++;
-      socket.emit('yourVote', msg.value);
-      io.sockets.emit('pollResults', polls[msg.pollId]);
-    }
-  }
-
-  function closePoll(io,msg){
-    polls[msg].status = 'closed';
-    io.sockets.emit('pollClosed', msg);
-  }
 }
 
 module.exports = sockets;
