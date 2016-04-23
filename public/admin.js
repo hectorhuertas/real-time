@@ -7,6 +7,7 @@ $(document).ready(function(){
 
 socket.on('connect', function(){
   console.log('Admin Conexion stablished');
+  socket.send('status', 'connected');
 });
 
 socket.on('pollResults', function(poll){

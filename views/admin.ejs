@@ -7,11 +7,7 @@
   <p><%= option %>: <span><%= poll.options[option] %></span></p>
 <% } %>
 <div id="status">
-  <% if(poll.status === 'closed'){ %>
-    <h3>Poll Closed</h3>
-  <% } else { %>
-    <button id="close-poll" type="button" name="button">Close Poll</button>
-  <% } %>
+  <button id="close-poll" type="button" name="button">Close Poll</button>
 </div>
 
 <% include ./_footer %>
