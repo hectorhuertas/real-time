@@ -1,4 +1,4 @@
-const moment = require('moment')
+const moment = require('moment');
 module.exports = function(io, config, polls){
   const generateSecret = require('./lib/generate-secret');
 
@@ -12,11 +12,12 @@ module.exports = function(io, config, polls){
     });
   });
 
-  function addPoll(poll, secret){
+  function addPoll(poll, secret, deadline){
     polls[slugify(poll.title)] = {
       id: slugify(poll.title),
       title: poll.title,
       secret: secret,
+      deadline: deadline,
       options: {
         [poll.one]: 0,
         [poll.two]: 0,
@@ -32,14 +33,9 @@ module.exports = function(io, config, polls){
   }
 
   function newPoll(socket, msg){
-    console.log(msg);
-    console.log(moment().unix());
-    console.log(moment(msg.date + ' ' + msg.time).unix());
-    console.log(moment("1995-12-25").unix());
-
-
+    const deadline = moment(msg.date + ' ' + msg.time).unix();
     const secret = generateSecret();
-    addPoll(msg, secret);
+    addPoll(msg, secret, deadline);
     const newLinks = {
       admin: config.host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
       voting: config.host + 'polls/' + slugify(msg.title)
