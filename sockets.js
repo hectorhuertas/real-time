@@ -1,31 +1,21 @@
 
 const moment = require('moment');
-module.exports = function(io, config){
+const pollManager = require('./lib/poll-manager');
+function sockets(io, config){
   const polls = require('./lib/polls');
   const generateSecret = require('./lib/generate-secret');
 
   io.on('connection', function(socket){
-    console.log('someone connected');
+    console.log('Someone connected');
 
     socket.on('message', function (channel, msg) {
-      console.log(polls);
-      console.log(moment().unix());
-      console.log(moment().format('LTS'));
-      closePolls(polls, io);
+      pollManager.closeOutdated(io);
+
       if (channel === 'newPoll')   { newPoll(socket, msg); }
       if (channel === 'newVote')   { newVote(socket, msg); }
       if (channel === 'closePoll') { closePoll(io,msg); }
     });
   });
-
-  function closePolls(polls,io){
-    for(var poll in polls){
-      if (polls[poll].deadline <= moment().utc().unix()) {
-        polls[poll].status = 'closed';
-        io.sockets.emit('pollClosed', poll);
-      }
-    }
-  }
 
   function addPoll(poll, secret, deadline){
     polls[slugify(poll.title)] = {
@@ -69,4 +59,6 @@ module.exports = function(io, config){
     polls[msg].status = 'closed';
     io.sockets.emit('pollClosed', msg);
   }
-};
+}
+
+module.exports = sockets;
