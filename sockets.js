@@ -1,3 +1,4 @@
+const moment = require('moment')
 module.exports = function(io, config, polls){
   const generateSecret = require('./lib/generate-secret');
 
@@ -31,6 +32,12 @@ module.exports = function(io, config, polls){
   }
 
   function newPoll(socket, msg){
+    console.log(msg);
+    console.log(moment().unix());
+    console.log(moment(msg.date + ' ' + msg.time).unix());
+    console.log(moment("1995-12-25").unix());
+
+
     const secret = generateSecret();
     addPoll(msg, secret);
     const newLinks = {
