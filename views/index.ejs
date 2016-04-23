@@ -1,0 +1,24 @@
+<% include ./_head %>
+
+<h1>Poll your friends</h1>
+<h3>Title: <input id="title" type="text" name="name" value ="Titulo de la encuesta" placeholder="name your poll..."></h3>
+<h3>Options:</h3>
+<ol>
+  <li><input id="one" type="text" name="name" value="Me encanta" placeholder="fill the answer..."></li>
+  <li><input id="two" type="text" name="name" value="Regulero" placeholder="fill the answer..."></li>
+  <li><input id="three" type="text" name="name" value="Ni me lo acerques" placeholder="fill the answer..."></li>
+</ol>
+<h3>Closing time:
+  <input id="date" type="date" name="name" value="">
+  <input id="time" type="time" name="name" value="18:01:07">
+</h3>
+<input id="poll" type="button" name="name" value="Start the Poll">
+<hr>
+<h3>Poll Links</h3>
+<div id="links">
+  <p>Admin View:</p>
+  <p>Voting Page:</p>
+</div>
+<script src="moment.js"></script>
+
+<% include ./_footer %>

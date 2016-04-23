@@ -4,7 +4,7 @@ function pollOwner(request, polls){
 
 module.exports = function(app, polls){
   app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public/index.html' );
+    res.render('index', {viewName: 'index', title: 'Real Time'});
   });
 
   app.get('/polls/:id', function(req, res){
