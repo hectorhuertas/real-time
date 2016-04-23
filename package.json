@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/hectorhuertas/real-time#readme",
   "dependencies": {
+    "cron": "^1.1.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
+    "moment": "^2.13.0",
     "socket.io": "^1.4.5"
   }
 }

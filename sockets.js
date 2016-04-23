@@ -1,3 +1,4 @@
+const moment = require('moment');
 module.exports = function(io, config, polls){
   const generateSecret = require('./lib/generate-secret');
 
@@ -5,17 +6,31 @@ module.exports = function(io, config, polls){
     console.log('someone connected');
 
     socket.on('message', function (channel, msg) {
+      console.log(polls);
+      console.log(moment().unix());
+      console.log(moment().format('LTS'));
+      closePolls(polls, io);
       if (channel === 'newPoll')   { newPoll(socket, msg); }
       if (channel === 'newVote')   { newVote(socket, msg); }
       if (channel === 'closePoll') { closePoll(io,msg); }
     });
   });
 
-  function addPoll(poll, secret){
+  function closePolls(polls,io){
+    for(var poll in polls){
+      if (polls[poll].deadline <= moment().utc().unix()) {
+        polls[poll].status = 'closed';
+        io.sockets.emit('pollClosed', poll);
+      }
+    }
+  }
+
+  function addPoll(poll, secret, deadline){
     polls[slugify(poll.title)] = {
       id: slugify(poll.title),
       title: poll.title,
       secret: secret,
+      deadline: poll.deadline,
       options: {
         [poll.one]: 0,
         [poll.two]: 0,
@@ -30,12 +45,12 @@ module.exports = function(io, config, polls){
       .replace(/[\s\W-]+/g, '-');
   }
 
-  function newPoll(socket, msg){
+  function newPoll(socket, pollData){
     const secret = generateSecret();
-    addPoll(msg, secret);
+    addPoll(pollData, secret);
     const newLinks = {
-      admin: config.host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
-      voting: config.host + 'polls/' + slugify(msg.title)
+      admin: config.host + 'polls/' + slugify(pollData.title) + '/admin/' + secret,
+      voting: config.host + 'polls/' + slugify(pollData.title)
     };
     socket.emit('newLinks', newLinks);
   }
