@@ -8,7 +8,12 @@ module.exports = function(app, polls){
   });
 
   app.get('/polls/:id', function(req, res){
-    res.render('voting', {poll: polls[req.params.id]});
+    const viewData = {
+      viewName: 'voting',
+      title: 'Voting Page',
+      poll: polls[req.params.id]
+    };
+    res.render('voting', viewData);
   });
 
   app.get('/polls/:id/admin/:secret', function(req, res){

@@ -1,27 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Voting Page</title>
-  </head>
-  <body>
-    <h1>Cast your vote!</h1>
+<% include ./_head %>
 
-    <h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
+<h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
 
-    <div id="poll-options">
-      <% if(poll.status === 'closed'){ %>
-        <h3>Poll Closed</h3>
-      <% } else { %>
-        <% for(option in poll.options){ %>
-          <%= option %>:<input id="<%= option %>"class="voter" type="button" name="name" value="Vote"><br>
-        <% } %>
-        <h3 id="yourVote">Your vote: </h3>
-      <% } %>
-    </div>
+<div id="poll-options">
+  <% if(poll.status === 'closed'){ %>
+    <h3>Poll Closed</h3>
+  <% } else { %>
+    <% for(option in poll.options){ %>
+      <%= option %>:<input id="<%= option %>"class="voter" type="button" name="name" value="Vote"><br>
+    <% } %>
+    <h3 id="yourVote">Your vote: </h3>
+  <% } %>
+</div>
 
-    <script src="/jquery-2.2.3.js"> </script>
-    <script src="/socket.io/socket.io.js"> </script>
-    <script src="/voting.js"> </script>
-  </body>
-</html>
+<% include ./_footer %>
