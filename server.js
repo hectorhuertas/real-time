@@ -17,11 +17,4 @@ const socketIo = require('socket.io');
 const io = socketIo(server);
 require('./sockets.js')(io, config, polls);
 
-const moment = require('moment')
-var bob = moment().format('LT')
-console.log(bob);
-
-var CronJob = require('cron').CronJob;
-new CronJob('00 * * * * *', function() {
-  console.log('LIMPIEZA');
-}, null, true, 'America/Los_Angeles');
+require('./lib/poll-closer')(polls,io);
