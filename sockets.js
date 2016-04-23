@@ -6,6 +6,9 @@ module.exports = function(io, config, polls){
     console.log('someone connected');
 
     socket.on('message', function (channel, msg) {
+      console.log(polls);
+      console.log(moment().unix());
+      console.log(moment().format('LTS'));
       closePolls(polls, io);
       if (channel === 'newPoll')   { newPoll(socket, msg); }
       if (channel === 'newVote')   { newVote(socket, msg); }
