@@ -1,6 +1,4 @@
-function authenticated(request, polls){
-  return request.params.secret === polls[request.params.id].secret;
-}
+var authenticate = require('./lib/authenticate');
 
 function customize(name, title, poll) {
   return {
@@ -20,7 +18,7 @@ function routes(app, polls){
   });
 
   app.get('/polls/:id/admin/:secret', function(req, res){
-    if (!authenticated(req, polls)) { res.sendStatus(404); }
+    if (!authenticate(req, polls)) { res.sendStatus(404); }
 
     res.render('admin', customize('admin', 'Admin view', polls[req.params.id]));
   });

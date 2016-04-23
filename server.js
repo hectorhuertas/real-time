@@ -5,7 +5,7 @@ const app = express();
 const config = require('./config.js');
 config.set(app, express);
 
-const polls = {};
+const polls = require('./lib/polls');
 
 require('./routes.js')(app, polls);
 
