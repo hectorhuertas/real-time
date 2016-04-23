@@ -1,7 +1,7 @@
 const socket = io();
 $(document).ready(function(){
   $('#poll').on('click', generatePoll);
-  $('#time').val(moment().add(30,'second').format('HH:mm:ss'));
+  $('#time').val(moment().add(10,'second').format('HH:mm:ss'));
   $('#date').val(moment().format('YYYY-MM-DD'));
 });
 
@@ -23,8 +23,8 @@ function pollData(){
       one: $('#one').val(),
       two: $('#two').val(),
     three: $('#three').val(),
-    time: $('#time').val(),
-    date: $('#date').val()
+     time: $('#time').val(),
+     date: $('#date').val()
   };
 }
 

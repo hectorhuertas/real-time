@@ -16,5 +16,3 @@ const server = http.createServer(app).listen(config.port, function() {
 const socketIo = require('socket.io');
 const io = socketIo(server);
 require('./sockets.js')(io, config, polls);
-
-require('./lib/poll-closer')(polls,io);

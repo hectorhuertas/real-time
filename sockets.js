@@ -6,11 +6,21 @@ module.exports = function(io, config, polls){
     console.log('someone connected');
 
     socket.on('message', function (channel, msg) {
+      closePolls(polls, io);
       if (channel === 'newPoll')   { newPoll(socket, msg); }
       if (channel === 'newVote')   { newVote(socket, msg); }
       if (channel === 'closePoll') { closePoll(io,msg); }
     });
   });
+
+  function closePolls(polls,io){
+    for(var poll in polls){
+      if (polls[poll].deadline <= moment().unix()) {
+        polls[poll].status = 'closed';
+        io.sockets.emit('pollClosed', poll);
+      }
+    }
+  }
 
   function addPoll(poll, secret, deadline){
     polls[slugify(poll.title)] = {
