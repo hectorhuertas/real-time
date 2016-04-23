@@ -1,5 +1,7 @@
+
 const moment = require('moment');
-module.exports = function(io, config, polls){
+module.exports = function(io, config){
+  const polls = require('./lib/polls');
   const generateSecret = require('./lib/generate-secret');
 
   io.on('connection', function(socket){
