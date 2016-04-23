@@ -1,15 +1,14 @@
 const pollManager = require('./lib/poll-manager');
 
-function send(responses, io, socket){
+function send(bob, io, socket){
+  console.log(bob);
+  var responses = bob.reduce(function(a, b) {
+  return a.concat(b);
+}, []);
   for (var i = 0; i < responses.length; i++) {
-    // console.log(responses[i]);
     switch (responses[i].type) {
-      case 'one': socket.emit(responses[i].channel, responses[i].msg);break;
-      case 'two': console.log('yeah');
-      // console.log('bob');
-        break;
-      default:
-
+      case 'one':    socket .emit(responses[i].channel, responses[i].msg);break;
+      case 'all': io.sockets.emit(responses[i].channel, responses[i].msg);break;
     }
   }
 }
@@ -21,14 +20,16 @@ function sockets(io, config){
     console.log('Someone connected');
 
     socket.on('message', function (channel, msg) {
-      pollManager.closeOutdated(io);
       const responses = [];
+      responses.push(pollManager.closeOutdated(io));
       if (channel === 'newPoll')   {
-        responses.push(pollManager.create(msg, socket));
+        responses.push(pollManager.newPoll(msg, socket));
       }
-      if (channel === 'newVote')   { pollManager.newVote(msg, io, socket); }
-      if (channel === 'closePoll') { pollManager.closePoll(msg, io); }
-      // console.log(responses);
+      if (channel === 'newVote')   {
+        responses.push(pollManager.newVote(msg, io, socket)); }
+      if (channel === 'closePoll') {
+        responses.push(pollManager.closePoll(msg, io));
+       }
       send(responses, io, socket);
     });
   });
