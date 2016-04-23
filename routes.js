@@ -1,26 +1,29 @@
-function pollOwner(request, polls){
+function authenticated(request, polls){
   return request.params.secret === polls[request.params.id].secret;
 }
 
-module.exports = function(app, polls){
+function customize(name, title, poll) {
+  return {
+    viewName: name,
+    viewTitle: title,
+    poll: poll
+  };
+}
+
+function routes(app, polls){
   app.get('/', function(req, res){
-    res.render('index', {viewName: 'index', title: 'Real Time'});
+    res.render('index', {viewName: 'index', viewTitle: 'Real Time'});
   });
 
   app.get('/polls/:id', function(req, res){
-    const viewData = {
-      viewName: 'voting',
-      title: 'Voting Page',
-      poll: polls[req.params.id]
-    };
-    res.render('voting', viewData);
+    res.render('voting', customize('voting', 'Voting Page', polls[req.params.id]));
   });
 
   app.get('/polls/:id/admin/:secret', function(req, res){
-    if (pollOwner(req, polls)) {
-      res.render('admin', {viewName: 'admin', poll: polls[req.params.id], title: 'Admin View'});
-    } else {
-      res.sendStatus(404);
-    }
+    if (!authenticated(req, polls)) { res.sendStatus(404); }
+
+    res.render('admin', customize('admin', 'Admin view', polls[req.params.id]));
   });
-};
+}
+
+module.exports = routes;
