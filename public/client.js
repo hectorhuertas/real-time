@@ -23,9 +23,13 @@ function pollData(){
       one: $('#one').val(),
       two: $('#two').val(),
     three: $('#three').val(),
-     time: $('#time').val(),
-     date: $('#date').val()
+     deadline: deadline()
   };
+}
+
+function deadline() {
+  var inputTime = $('#date').val() + ' ' + $('#time').val();
+  return moment(inputTime).utc().unix();
 }
 
 function showLinks(links){

@@ -18,7 +18,7 @@ module.exports = function(io, config, polls){
 
   function closePolls(polls,io){
     for(var poll in polls){
-      if (polls[poll].deadline <= moment().unix()) {
+      if (polls[poll].deadline <= moment().utc().unix()) {
         polls[poll].status = 'closed';
         io.sockets.emit('pollClosed', poll);
       }
@@ -30,7 +30,7 @@ module.exports = function(io, config, polls){
       id: slugify(poll.title),
       title: poll.title,
       secret: secret,
-      deadline: deadline,
+      deadline: poll.deadline,
       options: {
         [poll.one]: 0,
         [poll.two]: 0,
@@ -45,13 +45,12 @@ module.exports = function(io, config, polls){
       .replace(/[\s\W-]+/g, '-');
   }
 
-  function newPoll(socket, msg){
-    const deadline = moment(msg.date + ' ' + msg.time).unix();
+  function newPoll(socket, pollData){
     const secret = generateSecret();
-    addPoll(msg, secret, deadline);
+    addPoll(pollData, secret);
     const newLinks = {
-      admin: config.host + 'polls/' + slugify(msg.title) + '/admin/' + secret,
-      voting: config.host + 'polls/' + slugify(msg.title)
+      admin: config.host + 'polls/' + slugify(pollData.title) + '/admin/' + secret,
+      voting: config.host + 'polls/' + slugify(pollData.title)
     };
     socket.emit('newLinks', newLinks);
   }
