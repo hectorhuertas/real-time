@@ -19,9 +19,12 @@ socket.on('newLinks', function(links){
 });
 
 function pollData(){
+  var options = {};
+  $('ol input').each(function() { options[this.value] = 0;});
+
   return {
     title: $('#title').val(),
-    options: $('ol input').map(function() { return this.value; }).get(),
+    options: options,
     deadline: deadline()
   };
 }
