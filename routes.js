@@ -3,7 +3,7 @@ var viewData = require('./lib/view-data');
 
 function routes(app){
   app.get('/', function(req, res){
-    res.render('index', viewData('index', 'Read Time'));
+    res.render('index', viewData('index', 'Real Time'));
   });
 
   app.get('/polls/:id', function(req, res){

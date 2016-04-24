@@ -3,11 +3,14 @@
 <h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
 
 <div id="poll-options">
-  <% for(option in poll.options){ %>
-    <%= option %>:<input id="<%= option %>"class="voter"
-                    type="button" value="Vote"><br>
+  <% if(poll.status === 'closed'){ %>
+    <h3>Poll Closed</h3>
+  <% } else { %>
+    <% for(option in poll.options){ %>
+      <%= option %>:<input id="<%= option %>"class="voter" type="button" name="name" value="Vote"><br>
+    <% } %>
+    <h3 id="yourVote">Your vote: </h3>
   <% } %>
-  <h3 id="yourVote">Your vote: </h3>
 </div>
 
 <% include ./_footer %>

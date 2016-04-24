@@ -11,7 +11,11 @@ socket.on('connect', function(){
 });
 
 socket.on('pollResults', function(poll){
-  updatePoll(poll);
+  console.log(poll);
+  console.log(currentPoll);
+  if (poll.id === currentPoll) {
+    updatePoll(poll);
+  }
 });
 
 socket.on('pollClosed', function(poll){
