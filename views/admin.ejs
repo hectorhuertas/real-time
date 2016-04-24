@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Admin View</title>
-  </head>
-  <body>
-    <h1>Poll Results</h1>
+<% include ./_head %>
 
-    <h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
+<h1>Poll Results</h1>
+<h2 id="poll" data-id="<%= poll.id %>"><%= poll.title %></h2>
 
-    <% for(option in poll.options){ %>
-      <p><%= option %>: <span><%= poll.options[option] %></span></p>
-    <% } %>
-    <div id="status">
-      <% if(poll.status === 'closed'){ %>
-        <h3>Poll Closed</h3>
-      <% } else { %>
-        <button id="close-poll" type="button" name="button">Close Poll</button>
-      <% } %>
-    </div>
+<% for(option in poll.options){ %>
+  <p><%= option %>: <span><%= poll.options[option] %></span></p>
+<% } %>
+<div id="status">
+  <% if(poll.status === 'closed'){ %>
+    <h3>Poll Closed</h3>
+  <% } else { %>
+    <button id="close-poll" type="button" name="button">Close Poll</button>
+  <% } %>
+</div>
 
-    <script src="/jquery-2.2.3.js"> </script>
-    <script src="/socket.io/socket.io.js"> </script>
-    <script src="/admin.js"> </script>
-  </body>
-</html>
+<% include ./_footer %>

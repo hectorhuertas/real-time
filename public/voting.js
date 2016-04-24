@@ -7,6 +7,7 @@ $(document).ready(function(){
 
 socket.on('connect', function(){
   console.log('Voting Conexion stablished');
+  socket.send('status', 'connected');
 });
 
 socket.on('yourVote', function(vote){

@@ -1,21 +1,20 @@
-function pollOwner(request, polls){
-  return request.params.secret === polls[request.params.id].secret;
-}
+var authenticate = require('./lib/authenticate');
+var viewData = require('./lib/view-data');
 
-module.exports = function(app, polls){
+function routes(app){
   app.get('/', function(req, res){
-    res.sendFile(__dirname + '/public/index.html' );
+    res.render('index', viewData('index', 'Real Time'));
   });
 
   app.get('/polls/:id', function(req, res){
-    res.render('voting', {poll: polls[req.params.id]});
+    res.render('voting', viewData('voting', 'Voting Page', req.params.id));
   });
 
   app.get('/polls/:id/admin/:secret', function(req, res){
-    if (pollOwner(req, polls)) {
-      res.render('admin', {poll: polls[req.params.id]});
-    } else {
-      res.sendStatus(404);
-    }
+    if (!authenticate(req)) { res.sendStatus(404); }
+
+    res.render('admin', viewData('admin', 'Admin view', req.params.id));
   });
-};
+}
+
+module.exports = routes;

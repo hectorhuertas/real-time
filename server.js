@@ -5,9 +5,7 @@ const app = express();
 const config = require('./config.js');
 config.set(app, express);
 
-const polls = {};
-
-require('./routes.js')(app, polls);
+require('./routes.js')(app);
 
 const server = http.createServer(app).listen(config.port, function() {
   console.log('Listening on port ' + config.port);
@@ -15,4 +13,4 @@ const server = http.createServer(app).listen(config.port, function() {
 
 const socketIo = require('socket.io');
 const io = socketIo(server);
-require('./sockets.js')(io, config, polls);
+require('./sockets.js')(io, config);
