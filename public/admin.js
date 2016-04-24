@@ -11,8 +11,6 @@ socket.on('connect', function(){
 });
 
 socket.on('pollResults', function(poll){
-  console.log(poll);
-  console.log(currentPoll);
   if (poll.id === currentPoll) {
     updatePoll(poll);
   }
