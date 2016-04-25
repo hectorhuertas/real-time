@@ -19,7 +19,7 @@ socket.on('pollClosed', function(poll){
 });
 
 function vote(e){
-  socket.send('newVote', {pollId:currentPoll, value: e.target.id});
+  socket.send('newVote', {pollId:currentPoll, value: e.target.id, ip:userip});
 }
 
 function setPollAsClosed(poll) {

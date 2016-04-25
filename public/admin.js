@@ -28,6 +28,13 @@ function updatePoll(poll) {
   for(var option in poll.options){
     $("p:contains('" + option + "')").find('span').text(poll.options[option]);
   }
+
+  $('#vote-origins').empty();
+
+  for(var ip in poll.votes){
+    $('#vote-origins').append('<p>'+ip+': <span>'+poll.votes[ip]+'</span></p>');
+    $("p:contains('" + ip + "')").find('span').text(poll.votes[ip]);
+  }
 }
 
 function setPollAsClosed(poll) {

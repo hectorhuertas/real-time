@@ -14,4 +14,11 @@
   <% } %>
 </div>
 
+<h3>Origin of votes</h3>
+<div id="vote-origins">
+  <% for(ip in poll.votes){ %>
+    <p><%= ip %>: <span><%= poll.votes[ip] %></span></p>
+  <% } %>
+</div>
+
 <% include ./_footer %>
