@@ -20,7 +20,7 @@ Real time is a real-time poll app to query your friends for quick decisions. It 
 
 * Send the 'Voting Page' link to you friends to let them vote.
 
-* Check the 'Admin View' link to see the poll results on real time.
+* Check the 'Admin View' link to see the poll results on real time. The 'Origin of votes' shows how many votes came from each IP address.
 
 * The poll will close automatically at its closing time, or if you press the 'Close Poll' button in the 'Admin View'.
 
